@@ -1,11 +1,16 @@
 # ntfy Survey Reminder (Seminar-Version, cross-platform)
 
-Dieses Projekt plant und verschickt **3 Push-Erinnerungen** (via **ntfy**) für eine Umfrage.
-Die Zeitpunkte werden **randomisiert** im Zeitraum **20.01–22.01** gewählt – unter folgenden Regeln:
+Dieses Projekt plant und verschickt **5 Push-Erinnerungen** (via **ntfy**) für eine Umfrage.
+Standardmäßig werden Zeitpunkte **randomisiert** im Zeitraum **21.01–22.01** gewählt.
+Der Default ist **mode=interval** mit **08:00–20:00** und **min_gap=60min**.
 
-- Nachricht 1: zwischen **08:00 und 10:00**
-- Nachricht 2: zwischen **12:00 und 14:00**
-- Nachricht 3: zwischen **16:00 und 18:00**
+Optional kannst du **mode=windows** nutzen, z.B.:
+- Fenster 1: **08:00–10:00**
+- Fenster 2: **10:00–12:00**
+- Fenster 3: **12:00–14:00**
+- Fenster 4: **14:00–16:00**
+- Fenster 5: **16:00–18:00**
+
 
 Ziel: Studierende ohne Python-Vorkenntnisse sollen das Tool **auf Windows, macOS und Linux** nutzen können.
 
@@ -65,9 +70,16 @@ Dann `config/ntfy.env` öffnen und Werte setzen:
 - `NTFY_TITLE`
 - `NTFY_MESSAGE`
 
-In `NTFY_TITLE` und `NTFY_MESSAGE` darf `{n}` vorkommen, z.B.:
-- Titel: `Umfrage-Erinnerung {n}/3`
-- Message: `Bitte nimm kurz an der Umfrage teil. (Reminder {n}/3)`
+In `NTFY_TITLE` und `NTFY_MESSAGE` dürfen Platzhalter vorkommen, z.B.:
+- `{k}` = Reminder-Nummer innerhalb des Tages
+- `{per_day}` = Reminder pro Tag
+- `{id}` = globale ID
+- `{url}` = Link aus `SURVEY_URL_TEMPLATE` (wenn gesetzt)
+- `{n}` = Alias für `{k}` (Kompatibilität)
+
+Beispiele:
+- Titel: `Umfrage-Erinnerung {k}/{per_day}`
+- Message: `Bitte nimm kurz an der Umfrage teil. (Reminder {k}/{per_day})`
 
 ### 4) Trockenlauf (Erklärmodus + kein Versand)
 ```bash
@@ -123,7 +135,7 @@ Empfohlenes Paket-Layout (für zuverlässige OS-Kompatibilität):
   Parameter/Regeln: Zeitraum, Zeitfenster, Defaults
 
 - `ntfy_reminder/schedule.py`  
-  Randomisierung + Erzeugung der 3 Zeitpunkte
+  Randomisierung + Erzeugung der 5 Zeitpunkte
 
 - `ntfy_reminder/send.py`  
   Versand an ntfy über HTTP (Standardbibliothek)
@@ -186,6 +198,11 @@ Für den Versand muss der Rechner den ntfy-Server erreichen können (`https://nt
 ---
 
 ## Befehlsübersicht
+
+Planen mit Zeitfenstern (statt Intervall):
+```bash
+python run.py plan --mode windows --windows "08:00-10:00,10:00-12:00,12:00-14:00,14:00-16:00,16:00-18:00"
+```
 
 Planen:
 ```bash
