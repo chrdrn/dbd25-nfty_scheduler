@@ -69,7 +69,7 @@ def send_ntfy(
         req.add_header("Click", click_url)
 
         # Action Button (Button in der Notification) – Label bitte ASCII, sonst ggf. 400
-        req.add_header("Actions", f"view, Umfrage starten, {click_url}")
+        req.add_header("Actions", f"view, Start survey, {click_url}")
 
     # Markdown (optional; Web-App only) :contentReference[oaicite:5]{index=5}
     if markdown:
