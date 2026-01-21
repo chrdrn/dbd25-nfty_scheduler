@@ -1,0 +1,13 @@
+[Unit]
+Description=Dispatch due ntfy reminders (%i)
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler
+ExecStart=/home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/.venv/bin/python /home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/tools/dispatch_due.py \
+  --python /home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/.venv/bin/python \
+  --runpy /home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/run.py \
+  --schedule /home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/out/%i_schedule.json \
+  --sent /home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/out/%i_sent.json \
+  --env-file /home/ubuntu-server/Dokumente/repositories/dbd25-nfty_scheduler/config/%i.env \
+  --explain

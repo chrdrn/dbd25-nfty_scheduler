@@ -1,0 +1,10 @@
+[Unit]
+Description=Run ntfy dispatcher every minute (%i)
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+AccuracySec=10s
+Persistent=true
+
+[Install]
+WantedBy=timers.target
