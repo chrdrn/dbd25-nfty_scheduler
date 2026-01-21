@@ -137,6 +137,7 @@ def _build_payload(schedule: dict, item: dict) -> dict:
         "id": str(item.get("id", "")),
         "day": str(item.get("day", "")),
         "k": str(item.get("k", "")),
+        "n": str(item.get("k", "")),
         "per_day": str(item.get("per_day", schedule.get("per_day", ""))),
         "when": str(item.get("when", "")),
         "time": str(item.get("time", "")),
@@ -151,6 +152,8 @@ def main():
 
     start = parse_date(args.start)
     end = parse_date(args.end)
+    if start > end:
+        raise SystemExit(f"Startdatum {start.isoformat()} ist nach Enddatum {end.isoformat()}.")
     out_path = Path(args.out)
 
     # Seed ableiten (base_seed + participant_id)
@@ -193,6 +196,10 @@ def main():
 
     # ab hier: Versand
     env = load_env_file(args.env_file)
+    server = args.server
+    env_server = str(env.get("NTFY_SERVER", "")).strip()
+    if env_server and args.server == DEFAULT_SERVER:
+        server = env_server
 
     # Optional: Markdown für ntfy Web-App (nicht überall gerendert)
     markdown_flag = str(env.get("NTFY_MARKDOWN", "")).strip().lower() in {"1", "true", "yes", "y"}
@@ -223,7 +230,7 @@ def main():
         send_ntfy(
             payload,
             env,
-            args.server,
+            server,
             explain=args.explain,
             click_url=survey_url or None,   # Click Header setzen (öffnet URL beim Tap)
             markdown=markdown_flag,
@@ -243,7 +250,7 @@ def main():
             send_ntfy(
                 payload,
                 env,
-                args.server,
+                server,
                 explain=args.explain,
                 click_url=survey_url or None,
                 markdown=markdown_flag,
