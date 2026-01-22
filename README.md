@@ -20,6 +20,8 @@ Ziel: Studierende ohne Python-Vorkenntnisse sollen das Tool **auf Windows, macOS
 
 > Du brauchst nur Python und dieses Repo. Kein Makefile nötig.
 
+Hinweis: Für eine Colab-Demo siehe `demo.ipynb`.
+
 ### 1) Repo klonen
 ```bash
 git clone <REPO-URL>
@@ -108,6 +110,18 @@ Wenn alle im Kurs denselben Plan generieren sollen:
 ```bash
 python run.py plan --seed 123
 ```
+
+---
+
+## Live-Demo (Jupyter / Colab)
+
+Es gibt ein fertiges Notebook fuer eine sichere Demo ohne Versand:
+
+- `demo.ipynb`
+
+Local Jupyter: Notebook oeffnen und die Zellen ausfuehren.
+
+Google Colab: Im Notebook die Clone-Zeile ausfuehren und `<REPO-URL>` ersetzen.
 
 ---
 
