@@ -99,7 +99,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument(
         "--participant-id",
         default=None,
-        help="ID pro Versuchsperson (z.B. Probandencode). Variiert den Schedule deterministisch.",
+        help="ID pro Gruppe. Variiert den Schedule deterministisch.",
     )
 
     # IO
